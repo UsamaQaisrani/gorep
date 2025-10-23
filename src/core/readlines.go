@@ -1,29 +1,13 @@
-package main
-
+package core
 import (
-	"fmt"
 	"io"
-	"os"
-	"log"
+	"fmt"
 	"strings"
 	"errors"
+	"log"
 )
 
-func main() {
-
-	f, err := os.Open("sample.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	lines := readLines(f)
-
-	for line := range lines {
-		fmt.Println(line)
-	}
-}	
-
-func readLines(f io.ReadCloser) <- chan string {
+func ReadLines(f io.ReadCloser) <- chan string {
 	lines := make(chan string)
 	go func() {
 		defer f.Close()
@@ -49,6 +33,8 @@ func readLines(f io.ReadCloser) <- chan string {
 				buffer = parts[1]
 			}
 		}
+		if buffer != "" {
+			lines <- buffer
+		}
 	}()
-	return lines
-}
+	return lines }
