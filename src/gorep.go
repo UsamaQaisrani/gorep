@@ -4,17 +4,16 @@ import (
 	"fmt"
 	"os"
 	"log"
-	"usamaqaisrani/gorep/src/core"
+	"usamaqaisrani/gorep/src/core/read"
 )
 
 func main() {
-
 	f, err := os.Open("sample.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	lines := core.ReadLines(f)
+	lines := read.ReadLines(f)
 
 	for line := range lines {
 		fmt.Println(line)
